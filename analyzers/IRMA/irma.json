@@ -1,5 +1,8 @@
 {
     "name": "IRMA_Scan",
+    "license": "AGPL-V3",
+    "author": "Unit777",
+    "url": "https://github.com/CERT-BDF/cortex-analyzers",
     "version": "0.1",
     "description": "IRMA scan file",
     "dataTypeList": ["file"],

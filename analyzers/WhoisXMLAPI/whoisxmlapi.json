@@ -1,5 +1,8 @@
 {
     "name": "WhoisXMLAPI",
+    "license": "AGPL-V3",
+    "author": "Unit777",
+    "url": "https://github.com/CERT-BDF/cortex-analyzers",
     "description": "Query a domain against the WhoisXMLAPI",
     "dataTypeList": ["domain", "ip", "fqdn", "ip"],
     "version": "0.1",
