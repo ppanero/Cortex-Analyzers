@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import pypdns
+import ipaddress
 from cortexutils.analyzer import Analyzer
 
 
@@ -13,7 +14,7 @@ class CIRCLPassiveDNSAnalyzer(Analyzer):
     def query(self, domain):
         """The actual query happens here. Time from queries is replaced with isoformat.
 
-        :param domain: The domain which should gets queried.
+        :param domain: The domain/url/ip which should gets queried.
         :type domain: str
         :returns: List of dicts containing the search results.
         :rtype: [list, dict]
@@ -23,7 +24,7 @@ class CIRCLPassiveDNSAnalyzer(Analyzer):
         try:
             result = self.pdns.query(domain)
         except:
-            self.error('Exception while querying passiveDNS. Check the domain format.')
+            self.error('Exception while querying passiveDNS. Check the domain/url/ip format.')
 
         # Clean the datetime problems in order to correct the json serializability
         clean_result = []
@@ -69,6 +70,12 @@ class CIRCLPassiveDNSAnalyzer(Analyzer):
             query = self.getData()
             if '/' in query:
                 self.error('\'/\' found in the supplied domain. use the URL datatype instead')
+        elif self.data_type == 'ip':
+            query = self.getData()
+            try:
+                ip = ipaddress.ip_address(query)
+            except:
+                self.error('Wrong IPv4 or IPv6 format in the supplied ip. use the URL or Domain datatype instead')
         else:
             self.error('invalid datatype')
         self.report({'results': self.query(query)})
